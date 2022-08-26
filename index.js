@@ -1,15 +1,26 @@
 //add event listener and pass through dom content
 //document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.grid');
+
+/** What I need todo:
+ * create grid board
+ * First create a 10*10 board with 20 bombs in it
+ * Then give each element a unique value like bomb or no bomb(empty)
+ * Then shuffle the bomb squares and empty squares together randomly when refresh the page
+ * Then let squares show how many bombs are around (in surrounding 8 other suqares)
+ * When click a square contains bomb, alert "Bomb!!", and end the game and refresh the page.
+ * When click a square that next to a bomb or bombs, show the number of bombs.
+ * When click a square that is actually empty with no bomb near it, automatically show other squares and expand the showing field until squares that next to bombs with number on it. (???how???)
+ * Add flag in square conatins bomb
+ * When all bomb squares were flagged, tell playerd that they win the game.
+ * Styling 
+ * */
+   
+
+const grid = document.querySelector('.grid');
     let width = 10;
     let squares = [];
 
-    
-
-//create board
-//First create a 10*10 board with 20 bombs in it
-//Then give each element a unique value like bomb or no bomb(empty)
-//Then shuffle the bomb squares and empty squares together randomly when refresh the page
+//create grid board
     const createBoard = (i) => {
 
 //create bomb and empty squares and shufffle them in random everytime refresh the page
@@ -60,9 +71,6 @@
 
         }
 
-       
-
-    
 
 
     }
