@@ -71,6 +71,123 @@ const grid = document.querySelector('.grid');
 
         }
 
+        for (let i = 0; i < squares.length; i++) {
+            let numberOfBombs = 0;
+            const leftColume = (i % 10 === 0);
+            const rightColume = (i % 10 === 9);
+            const topColume = (i - 10 < 0);
+            const bottomColume = (i + 10 > 100);
+
+            if (squares[i].classList.contains('empty')) {
+                if (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                
+                //check left-side squares 10-80
+                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i -9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i +11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } 
+
+                //check right-side squares 19-89
+                  else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i -11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i +9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                }
+
+                //check top-side squares 1-8
+                  else if (i > 0 && topColume && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && topColume && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && topColume && squares[i +9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && topColume && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && topColume && squares[i +11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                }
+
+                //check top-side squares 1-8
+                  else if (i > 0 && bottomColume && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && bottomColume && squares[i -11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && bottomColume && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && bottomColume && squares[i -9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i > 0 && bottomColume && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                }
+
+                //check 0 & 90
+                  else if (i = 0  && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 0  && squares[i +11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 0  && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 90  && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 90  && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 90  && squares[i -9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } 
+                
+                //ckeck 9 & 99
+                  else if (i = 9  && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 9  && squares[i +9].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 9  && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 99  && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 99  && squares[i -11].classList.contains('bomb')) {
+                    numberOfBombs ++
+                } else if (i = 99  && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++
+                }
+
+                
+
+
+            }
+        }
+
+
+
 
 
     }
