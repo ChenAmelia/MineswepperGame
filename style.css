@@ -12,7 +12,11 @@
 
 }
 
+.checked {
+  background-color: darkolivegreen;
+}
+
 .bomb {
   background-color: pink;
-
 }
+

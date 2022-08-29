@@ -13,6 +13,7 @@
  * Add flag in square conatins bomb
  * When all bomb squares were flagged, tell playerd that they win the game.
  * Styling 
+ * Delete all the comment and make the code as concise as possible
  * */
    
 
@@ -54,12 +55,14 @@ const grid = document.querySelector('.grid');
 
 
         for(let i = 0; i < 100; i++) {
-            //create a div and unique id for each element
+            //create a div, unique id and class for each element
             //and pass through the square to grid
             const square = document.createElement('div');
-            square.setAttribute('id', i)
+            square.setAttribute('id', i);
 
-            grid.appendChild(square)
+            square.classList.add(shuffledArray[i]);
+
+            grid.appendChild(square);
 
 
             //add class to each element in shuffled array and make sure we can add impage or text in the square
@@ -68,130 +71,73 @@ const grid = document.querySelector('.grid');
             //create new array of squares for bombs and push it to the square
             squares.push(square);
 
+            //
+            square.addEventListener('click', function(e) {
+                click(square)
+            })
 
         }
+
+        //check the bomb around the square in surrounding other eight squares
 
         for (let i = 0; i < squares.length; i++) {
             let numberOfBombs = 0;
             const leftColume = (i % 10 === 0);
             const rightColume = (i % 10 === 9);
-            const topColume = (i - 10 < 0);
-            const bottomColume = (i + 10 > 100);
 
             if (squares[i].classList.contains('empty')) {
-                if (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i -9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if  (i > 0 && !leftColume && !rightColume &&!topColume && !bottomColume && squares[i +9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                
-                //check left-side squares 10-80
-                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i +1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i +10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i -10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i -9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && leftColume && !topColume && !bottomColume && squares[i +11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } 
+                if (i >= 0 && !leftColume && squares[i -1].classList.contains('bomb')) {
+                    numberOfBombs ++ } 
+                if (i >= 0 && !rightColume && squares[i +1].classList.contains('bomb')) {
+                    numberOfBombs ++} 
+                if (i > 9 && squares[i -10].classList.contains('bomb')) {
+                    numberOfBombs ++ }
+                if (i < 90 && squares[i +10].classList.contains('bomb')) {
+                    numberOfBombs ++ }
+                if (i > 10 && !leftColume && squares[i -11].classList.contains('bomb')) {
+                    numberOfBombs ++ } 
+                if (i > 9 && !rightColume && squares[i -9].classList.contains('bomb')) {
+                    numberOfBombs ++ }
+                if (i < 90 && !leftColume && squares[i +9].classList.contains('bomb')) {
+                    numberOfBombs ++ } 
+                if (i < 89 && !rightColume && squares[i +11].classList.contains('bomb')) {
+                    numberOfBombs ++ }
 
-                //check right-side squares 19-89
-                  else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i -10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i -11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i +9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && rightColume && !topColume && !bottomColume && squares[i +10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                }
-
-                //check top-side squares 1-8
-                  else if (i > 0 && topColume && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && topColume && squares[i +1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && topColume && squares[i +9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && topColume && squares[i +10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && topColume && squares[i +11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                }
-
-                //check top-side squares 1-8
-                  else if (i > 0 && bottomColume && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && bottomColume && squares[i -11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && bottomColume && squares[i -10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && bottomColume && squares[i -9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i > 0 && bottomColume && squares[i +1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                }
-
-                //check 0 & 90
-                  else if (i = 0  && squares[i +1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 0  && squares[i +11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 0  && squares[i +10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 90  && squares[i +1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 90  && squares[i -10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 90  && squares[i -9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } 
-                
-                //ckeck 9 & 99
-                  else if (i = 9  && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 9  && squares[i +9].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 9  && squares[i +10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 99  && squares[i -10].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 99  && squares[i -11].classList.contains('bomb')) {
-                    numberOfBombs ++
-                } else if (i = 99  && squares[i -1].classList.contains('bomb')) {
-                    numberOfBombs ++
-                }
-
-                
-
-
+                //pass the number of bombs as a parameter to squares array, like add a class or div
+                squares[i].setAttribute('number', numberOfBombs);
             }
+          }
+
         }
 
 
 
 
-
-    }
     createBoard()
+
+    /**  write a function on clicking the squares
+     * When click a square contains empty, then show the number of bombs aroud it.
+     * when click a square contains bomb, then alert Game Over or other special effect.
+     * Add a class called "checked" to the squares already clicked, then add some pretty style to clicked squares
+    */
+    const click = (square) => {
+
+       
+
+        if (square.classList.contains('bomb')) {
+            alert('Game Over');
+        } else {
+            let numberOfBombs = square.getAttribute('number');
+            if (numberOfBombs > 0) {
+                square.classList.add('checked');
+                square.innerHTML = numberOfBombs;
+                return
+            }
+            square.classList.add('checked');
+        }
+    }
+
+
 
 
 
