@@ -122,44 +122,16 @@ const grid = document.querySelector('.grid');
 
         }
 
-
-
-
     createBoard()
-
-    /**  write a function on clicking the squares
-     * When click a square contains empty, then show the number of bombs aroud it.
-     * when click a square contains bomb, then alert Game Over or other special effect.
-     * Add a class called "checked" to the squares already clicked, then add some pretty style to clicked squares
-    */
-    const click = (square) => {
-
-        if (gameOver) return;
-        if (square.classList.contains('checked') || square.classList.contains('flag')) return;
-
-
-
-        if (square.classList.contains('bomb')) {
-            alert('Game Over');
-        } else {
-            let numberOfBombs = square.getAttribute('number');
-            if (numberOfBombs > 0) {
-                square.classList.add('checked');
-                square.innerHTML = numberOfBombs;
-                return
-            }
-            square.classList.add('checked');
-        }
-    }
 
     /** Add flag by clicking the right click
      * The sqaure that can be flagged should satisfy two conditions: 
      * 1.The sqaure wasn't be checked  2.The amount of flag still less than bomb
-     * 
-     * 
     */
-
     const addFlag = (square) => {
+
+        if(gameOver) return
+        
         if(!square.classList.contains('checked') && (amountOfFlags < amountOfBombs)) {
             if(!square.classList.contains('flagged')) {
                 square.classList.add('flagged');
@@ -173,6 +145,90 @@ const grid = document.querySelector('.grid');
             amountOfFlags --
         }
     }
+
+    /**  write a function on clicking the squares
+     * When click a square contains empty, then show the number of bombs aroud it.
+     * when click a square contains bomb, then alert Game Over or other special effect.
+     * Add a class called "checked" to the squares already clicked, then add some pretty style to clicked squares
+    */
+    const click = (square) => {
+        
+        //Set new id and new square for checking neighbouring squares using recursion
+        let squareId = square.id;
+
+        if (gameOver) return;
+        if (square.classList.contains('checked') || square.classList.contains('flag')) return;
+
+        if (square.classList.contains('bomb')) {
+            alert('Game Over');
+        } else {
+            let numberOfBombs = square.getAttribute('number');
+            if (numberOfBombs > 0) {
+                square.classList.add('checked');
+                square.innerHTML = numberOfBombs;
+                return
+            }
+            checkNeighboringSquares(square, squareId);  
+        }
+        square.classList.add('checked');
+    }
+
+    const checkNeighboringSquares = (square, squareId) => {
+
+        const leftColume = (squareId % 10 === 0);
+        const rightColume = (squareId % 10 === 9);
+
+        setTimeout(() => {
+
+            if(squareId >= 0 && !leftColume) {
+                const newId = squares[parseInt(squareId) - 1].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId >= 0 && !rightColume) {
+                const newId = squares[parseInt(squareId) + 1].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId > 9) {
+                const newId = squares[parseInt(squareId) - 10].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId < 90) {
+                const newId = squares[parseInt(squareId) + 10].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId > 10 && !leftColume) {
+                const newId = squares[parseInt(squareId) - 11].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId > 9 && !rightColume) {
+                const newId = squares[parseInt(squareId) - 9].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId < 90 && !leftColume) {
+                const newId = squares[parseInt(squareId) + 9].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+            if(squareId < 89 && !rightColume) {
+                const newId = squares[parseInt(squareId) + 11].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+
+        }, 10)   
+    }
+
+    
+
+
+
+
 
     
 
