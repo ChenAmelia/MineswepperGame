@@ -20,13 +20,17 @@
 const grid = document.querySelector('.grid');
     let width = 10;
     let squares = [];
+    let gameOver = false;
+    let amountOfFlags = 0;
+    let amountOfBombs = 20;
 
 //create grid board
     const createBoard = (i) => {
 
 //create bomb and empty squares and shufffle them in random everytime refresh the page
-        let amountOfBombs = 20;
+        
         let totalSuqares = 100;
+        
 
         /**Method of fill an array
          * The fill() method fills specified elements in an array with a value.
@@ -71,11 +75,19 @@ const grid = document.querySelector('.grid');
             //create new array of squares for bombs and push it to the square
             squares.push(square);
 
-            //
-            square.addEventListener('click', function(e) {
+            //left normal click
+            square.addEventListener('click', function(event) {
                 click(square)
             })
 
+            //right click to add flag
+          
+            square.oncontextmenu = function(event) {
+                event.preventDefault();
+                addFlag(square);
+            }
+
+           
         }
 
         //check the bomb around the square in surrounding other eight squares
@@ -122,7 +134,10 @@ const grid = document.querySelector('.grid');
     */
     const click = (square) => {
 
-       
+        if (gameOver) return;
+        if (square.classList.contains('checked') || square.classList.contains('flag')) return;
+
+
 
         if (square.classList.contains('bomb')) {
             alert('Game Over');
@@ -137,7 +152,31 @@ const grid = document.querySelector('.grid');
         }
     }
 
+    /** Add flag by clicking the right click
+     * The sqaure that can be flagged should satisfy two conditions: 
+     * 1.The sqaure wasn't be checked  2.The amount of flag still less than bomb
+     * 
+     * 
+    */
 
+    const addFlag = (square) => {
+        if(!square.classList.contains('checked') && (amountOfFlags < amountOfBombs)) {
+            if(!square.classList.contains('flagged')) {
+                square.classList.add('flagged');
+                square.innerHTML = '🎀'
+                amountOfFlags ++
+            }
+
+        } else {
+            square.classList.remove('flagged');
+            square.innerHTML = '';
+            amountOfFlags --
+        }
+    }
+
+    
+
+ 
 
 
 
