@@ -18,6 +18,8 @@
    
 
 const grid = document.querySelector('.grid');
+const bombsLeft = document.querySelector('#bombsLeft');
+const result = document.querySelector('#result');
     let width = 10;
     let squares = [];
     let gameOver = false;
@@ -27,7 +29,9 @@ const grid = document.querySelector('.grid');
 //create grid board
     const createBoard = (i) => {
 
-//create bomb and empty squares and shufffle them in random everytime refresh the page
+        //bombsLeft.innerHTML = amountOfFlags;
+
+        //create bomb and empty squares and shufffle them in random everytime refresh the page
         
         let totalSuqares = 100;
         
@@ -91,7 +95,6 @@ const grid = document.querySelector('.grid');
         }
 
         //check the bomb around the square in surrounding other eight squares
-
         for (let i = 0; i < squares.length; i++) {
             let numberOfBombs = 0;
             const leftColume = (i % 10 === 0);
@@ -137,12 +140,15 @@ const grid = document.querySelector('.grid');
                 square.classList.add('flagged');
                 square.innerHTML = '🎀'
                 amountOfFlags ++
-            }
+                bombsLeft.innerHTML = amountOfBombs - amountOfFlags;
+                winTheGame()
 
-        } else {
-            square.classList.remove('flagged');
-            square.innerHTML = '';
-            amountOfFlags --
+            }   else {
+                square.classList.remove('flagged');
+                square.innerHTML = '';
+                amountOfFlags --
+                bombsLeft.innerHTML = amountOfBombs - amountOfFlags;
+            }
         }
     }
 
@@ -157,10 +163,10 @@ const grid = document.querySelector('.grid');
         let squareId = square.id;
 
         if (gameOver) return;
-        if (square.classList.contains('checked') || square.classList.contains('flag')) return;
+        if (square.classList.contains('checked') || square.classList.contains('flagged')) return;
 
         if (square.classList.contains('bomb')) {
-            alert('Game Over');
+            gameEnd(square);
         } else {
             let numberOfBombs = square.getAttribute('number');
             if (numberOfBombs > 0) {
@@ -223,6 +229,38 @@ const grid = document.querySelector('.grid');
 
         }, 10)   
     }
+
+    //show all the bombs when the game over
+    const gameEnd = (square) => {
+        result.innerHTML = '💣  GAME OVER  💣';
+        gameOver = true;
+
+        squares.forEach(square => {
+            if(square.classList.contains('bomb')) {
+                square.innerHTML = '💣'
+                square.classList.remove('bomb');
+                square.classList.add('checked');
+            }
+        })
+    }
+
+    const winTheGame = () => {
+
+        let matches = 0;
+
+        for (let i = 0; i < squares.length; i++) {
+            if (squares[i].classList.contains('flagged') && squares[i].classList.contains('bomb')) {
+                matches ++
+              }
+              if (matches === amountOfBombs) {
+                result.innerHTML = '🎊YOU WIN!🎊'
+                gameOver = true
+              }
+        }
+    }
+    
+
+    //
 
     
 
