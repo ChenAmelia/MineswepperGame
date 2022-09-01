@@ -7,6 +7,9 @@
 
 ## Introduction
 This is a simple minesweeper game project that can run basic functions such as clicking to show the numbers of bombs around the square, flag the square and cancelling the flag, showing the numbers of bobs left in the grid, etc. When the player finds all bombs and flags them, then the player wins; if the player clicks on bombs, then the game is over.
+
+Here's the link of Github repository: https://github.com/ChenAmelia/MineswepperGame
+Here's the link of live page: https://chenamelia.github.io/MineswepperGame/
 	
 ## Description
 The project is created with:
